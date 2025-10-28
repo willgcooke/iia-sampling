@@ -23,7 +23,7 @@ results = pipe(
     # guidance_scale=7.5,       # CFG scale
     # height=512,               # image height
     # width=512,                # image width
-    num_images_per_prompt=5   # 2 images per prompt
+    num_images_per_prompt=1   # 2 images per prompt
 ).images
 
 # Save all generated images
