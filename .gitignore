@@ -1,2 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
 .venv/
+venv/
+.pip-cache/
+
+# IIA coefficient files (large binaries, regenerate via precompute_iia_coefficients.py)
+iia_coefficients.pt
+iia_checkpoint.pt
+
+# Test outputs (regenerable, keep a few examples in comparisons/)
 images/
+
+# Reference papers (large PDFs)
+*.pdf
+
+# large json prompt files from coco dataset (https://cocodataset.org/#download)
+coco_annotations/
