@@ -59,17 +59,21 @@ pip install -r requirements.txt
 
 1. Precompute coefficients (one-time):
 ```bash
-python precompute_iia_coefficients.py
+python precompute/precompute_iia_coefficients.py
 ```
+(For SDv2: `python precompute/precompute_iia_coefficients_sdv2.py`)
 
 2. Generate images:
 ```bash
 python main.py
 ```
+(Or `python generate/generate_fid_images.py` for FID evaluation, `python generate/generate_with_iia_two_coeff.py` for two-coefficient IIA)
 
 3. Test quality:
 ```bash
-python tests/quick_test_iia.py
+python eval/test_fid.py --model sdxl
+python eval/compute_mse.py --model sdxl
+python generate/generate_comparison_images.py
 ```
 
 ## Notes
