@@ -1,5 +1,7 @@
 from diffusers import DiffusionPipeline, DPMSolverMultistepScheduler, DDIMScheduler
-from custom_ddim_scheduler import CustomDDIMScheduler
+
+from schedulers.custom_ddim_scheduler import CustomDDIMScheduler
+from config import COEFFICIENTS_DIR
 
 import torch
 import time
@@ -14,8 +16,12 @@ pipe = DiffusionPipeline.from_pretrained(
 
 pipe.scheduler = CustomDDIMScheduler.from_config(pipe.scheduler.config)
 
-if os.path.exists('iia_coefficients.pt'):
-    pipe.scheduler.load_iia_coefficients('iia_coefficients.pt')
+NUM_STEPS = 25
+coeff_path = COEFFICIENTS_DIR / f'iia_coefficients_{NUM_STEPS}.pt'
+if not coeff_path.exists():
+    print(f"ERROR: {coeff_path} not found. Run precompute/precompute_iia_coefficients.py with NUM_INFERENCE_STEPS={NUM_STEPS} first.")
+    exit(1)
+pipe.scheduler.load_iia_coefficients(NUM_STEPS, path=str(coeff_path))
 
 pipe.to("cuda")
 
@@ -25,7 +31,7 @@ prompts = [
     "A cup of coffee next to a closed notebook"
 ]
 
-negative_prompt = "gray, black and white, grayscale, cartoon, painting, illustration, drawing, art, sketch, unrealistic, blurry, low quality, distorted, deformed, ugly, bad anatomy, anime, stylized, rendered, 3d render, digital art"
+negative_prompt = ""
 
 
 def generate_image(prompt, negative_prompt="", seed=42, use_refiner=False):
@@ -33,7 +39,7 @@ def generate_image(prompt, negative_prompt="", seed=42, use_refiner=False):
     
     generator = torch.Generator(device="cuda").manual_seed(seed)
     
-    steps = 25
+    steps = NUM_STEPS
     image = pipe(
         prompt=prompt,
         negative_prompt=negative_prompt,

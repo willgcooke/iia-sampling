@@ -6,9 +6,9 @@ __pycache__/
 venv/
 .pip-cache/
 
-# IIA coefficient files (large binaries, regenerate via precompute_iia_coefficients.py)
-iia_coefficients.pt
-iia_checkpoint.pt
+# IIA coefficient files (in coefficients/, regenerate via precompute scripts)
+coefficients/
+*.pt
 
 # Test outputs (regenerable, keep a few examples in comparisons/)
 images/
@@ -18,3 +18,18 @@ images/
 
 # large json prompt files from coco dataset (https://cocodataset.org/#download)
 coco_annotations/
+
+# Large image directories (regenerable)
+fid_images*/
+fid_resized_temp/
+images_two_coeff/
+images_two_coeff_sdv2/
+comparison_visual*/
+comparisons/
+cifar10_test/
+cifar10_data/
+coco/
+
+coco_prompts.txt
+
+run_overnight.bat

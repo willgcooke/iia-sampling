@@ -4,3 +4,4 @@ accelerate
 Pillow
 numpy
 tqdm
+clean-fid
